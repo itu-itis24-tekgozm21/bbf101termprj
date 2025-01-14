@@ -133,5 +133,82 @@
                 </div>
             </div>
             <button class="button" onclick="resetGame()">Reset the Game</button>
+        </div>
+    </main>
+    <script>
+        // Oyunun temel verileri
+        const targetWord = "BLINK"; // Kullanıcının tahmin etmesi gereken kelime
+        let currentWordState = ["_", "_", "_", "_", "_"]; // Kelimenin mevcut durumu
+        let score = 0; // Kullanıcının puanı
+        let lives = 3; // Kullanıcının sahip olduğu toplam can
+
+        // Ana sayfadan oyun sayfasına geçiş yapar
+        function showGamePage() {
+            document.getElementById('homepage').style.display = 'none';
+            document.getElementById('gamepage').style.display = 'block';
+        }
+
+        // Oyun ekranındaki bilgileri günceller
+        function updateDisplay() {
+            document.getElementById('wordDisplay').innerText = currentWordState.join(" ");
+            document.getElementById('score').innerText = `Score: ${score}`;
+            document.getElementById('hearts').innerHTML = "❤️".repeat(lives);
+        }
+
+        // Kullanıcı tahmini yapar
+        function makeGuess() {
+            const input = document.getElementById("guessInput");
+            const guess = input.value.toUpperCase(); // Kullanıcı girişini büyük harfe çevir
+            input.value = ""; // Giriş alanını temizle
+
+            if (!guess) {
+                alert("Please enter a valid letter or word!");
+                return;
+            }
+
+            if (guess.length === 1) {
+                checkSingleLetter(guess); // Harf kontrolü yap
+            } else {
+                checkWholeWord(guess); // Kelime kontrolü yap
+            }
+
+            updateDisplay(); // Ekranı güncelle
+        }
+
+        // Kullanıcının harf tahminini kontrol eder
+        function checkSingleLetter(letter) {
+            if (targetWord.includes(letter)) {
+                // Doğru tahmin edilen harfi kelimeye yerleştir
+                targetWord.split("").forEach((char, index) => {
+                    if (char === letter) currentWordState[index] = char;
+                });
+                score += 20; // Puan artır
+                if (!currentWordState.includes("_")) {
+                    alert("Congratulations! You guessed the word!");
+                }
+            } else {
+                lives--; // Yanlışsa bir can eksilt
+                if (lives === 0) {
+                    alert("Game over! You lost.");
+                    resetGame(); // Oyun sıfırla
+                }
+            }
+        }
+
+        // Kullanıcının kelime tahminini kontrol eder
+        function checkWholeWord(guess) {
+            if (guess === targetWord) {
+                currentWordState = targetWord.split(""); // Tüm kelimeyi doğru tahmin ettiyse tamamla
+                score += 100; // Büyük ödül puanı ver
+                alert("Amazing! You guessed the word correctly!");
+            } else {
+                lives = 0; // Yanlış kelime tahmin edildiyse tüm canları bitir
+                alert("Wrong guess! Game over.");
+                resetGame();
+            } 
+        } <!--oyunla ilgili genel fonksiyonlar yazıldı fakat can eksiltmede ve oyunu resetlemeyle ilgili kısımlar daha oturmuş değil-->
+        </script></body></html>
+            </div>
+            <button class="button" onclick="resetGame()">Reset the Game</button>
         </div> <!--ana ekran tamamlandı ve bazı revizeler yapıldı -->
     </main></body></html>

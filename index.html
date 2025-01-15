@@ -205,10 +205,19 @@
                 lives = 0; // Yanlış kelime tahmin edildiyse tüm canları bitir
                 alert("Wrong guess! Game over.");
                 resetGame();
-            } 
-        } <!--oyunla ilgili genel fonksiyonlar yazıldı fakat can eksiltmede ve oyunu resetlemeyle ilgili kısımlar daha oturmuş değil-->
-        </script></body></html>
-            </div>
-            <button class="button" onclick="resetGame()">Reset the Game</button>
-        </div> <!--ana ekran tamamlandı ve bazı revizeler yapıldı -->
-    </main></body></html>
+            }
+        }
+
+        // Oyunu sıfırlar
+        function resetGame() {
+            currentWordState = ["_", "_", "_", "_", "_"];
+            score = 0;
+            lives = 3;
+            updateDisplay(); // Ekranı başlangıç durumuna getir
+        }
+
+        // Sayfa yüklendiğinde ekranı başlatır
+        window.onload = updateDisplay;
+    </script>
+</body>
+</html>
